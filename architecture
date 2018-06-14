@@ -1,0 +1,16 @@
+clear screen
+save prev info
+prompt user
+	- take input
+	- save input to history
+	- split input by spaces
+	- merge all between " ". If only one, prompt for other
+	- replace ~,$, * or \ for equiv
+	- handle && | > >> <
+	- create command queue
+		-separate command and arguments of each cmd
+		-if starts with /, . or .. run program if file
+		-search for custom commands (like exit)
+		-search for commands in all PATHs
+		-
+		
