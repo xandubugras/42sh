@@ -48,18 +48,11 @@ typedef struct	s_tracker
 	int		i;
 	int		pos;
 	int		len;
-	int		last_read;
+	int		r;
+	char	*str;
+	t_elem	*curr;
 }				t_tracker;
 
-typedef struct	s_terminal
-{
-	struct termios	term;
-	char			*up;
-	char			*down;
-	char			*left;
-	char			*right;
-	char			*clear;
-}				t_terminal;
 
 typedef struct	s_queue
 {
@@ -72,6 +65,17 @@ typedef struct	s_stack
 	struct s_elem	*top;
 	struct s_elem	*bot;
 }				t_stack;
+
+typedef struct	s_terminal
+{
+	struct termios	term;
+	struct s_stack	*cmds;
+	char			*up;
+	char			*down;
+	char			*left;
+	char			*right;
+	char			*clear;
+}				t_terminal;
 
 struct termios	prev_term;
 struct termios	bg_term;
@@ -95,15 +99,17 @@ void			go_terminal(struct termios prev_term);
 */
 int				run_shell(t_terminal *t);
 /*
+**get_input.c
+*/
+char			*get_input(t_terminal *t);
+/*
 **DISPLAY_PROMPT.c
 */
-char			*prompt_command(t_terminal *t, t_stack *cmds, char *msg);
+char			*prompt_command(t_terminal *t, char *msg);
 /*
-**DISPLAY_PROMPT2.c
+**helper.c
 */
-char			*insert_char(char *input, int *len, int *pos, int *i);
-
-char			*rm_char(char *input, int pos);
+t_tracker		*init_tracker(t_tracker *t);
 /*
 **helper.c
 */
@@ -111,13 +117,21 @@ void	clear_mem(char *str, size_t size);
 /*
 **COMMANDS.c
 */
-void			move_cursor_left(int *pos);
+int				move_cursor_left(t_tracker *tr);
 
-void			move_cursor_right(int *pos, int len);
+int				move_cursor_right(t_tracker *tr);
 
 int				delete_char(int *pos, int *len);
 
-int				handle_shift(char *input, int r);
+int				print_properly(char *str, t_tracker *tr);
+
+int				handle_shift(char *buf, t_tracker *r);
+/*
+**COMMANDS2.c
+*/
+int				clear_line(t_tracker *tr);
+
+int				get_history(t_terminal *t, char **in, t_tracker *tr, int o);
 /*
 **SPLIT_INPUT.c
 */

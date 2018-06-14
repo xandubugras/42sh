@@ -18,13 +18,14 @@ SRC		=	main.c \
 			elem.c \
 			stack.c \
 			signals.c \
+			constructors.c \
 			commands.c \
+			commands2.c \
 			replacements.c \
-			print.c \
 			helper.c \
 			split_input.c \
 			display_prompt.c \
-			display_prompt2.c \
+			get_input.c \
 			run_shell.c
 			
 

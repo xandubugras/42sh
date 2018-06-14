@@ -37,7 +37,6 @@ static void		signal_continue(int sig)
 	ft_putstr_fd(tgetstr("ti", 0), 1);
 	ft_putstr_fd(tgetstr("cl", 0), 1);
 	init_signal_handlers();
-	print_list(root);
 }
 
 

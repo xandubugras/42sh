@@ -1,62 +1,53 @@
 #include "../include/42sh.h"
 
-void	move_cursor_left(int *pos)
+int		move_cursor_left(t_tracker *tr)
 {
-	if (*pos > 0)
+	if (tr->pos > 0)
 	{
 		ft_putstr_fd(tgetstr("le", 0), 1);
-		*pos -= 1;
-	}
-}
-
-void	move_cursor_right(int *pos, int len)
-{
-	if (*pos < len)
-	{
-		ft_putstr_fd(tgetstr("nd", 0), 1);
-		*pos += 1;
-	}
-}
-
-int		delete_char(int *pos, int *len)
-{
-	if (*pos > 0)
-	{
-		move_cursor_left(pos);
-		ft_putstr_fd(tgetstr("dc", 0), 1);
-		*len -= 1;
-		return (2);
+		tr->pos -= 1;
 	}
 	return (1);
 }
 
-/*void	add_line(char *input, int *pos, int *len)
+int		move_cursor_right(t_tracker *tr)
 {
-	
-}*/
-
-int		handle_shift(char *input, int r)
-{
-	if (r == 3 && input[0] == 27 && input[1] == 91 && input[2] == 90)
-		return (5); //add new line
-	if (r == 6 && input[0] == 27 && input[1] == 91 && input[2] == 49 &&
-		input[3] == 59 && input[4] == 50)
+	if (tr->pos < tr->len)
 	{
-		if (input[5] == 65)
-			ft_printf("shitftup\n"); //add new line
-			//r += 1 - 1;//up
-		else if (input[5] == 66)
-			ft_printf("shiftdown\n"); //add new line
-			//r += 1 - 1;//down
-		else if (input[5] == 67)
-			ft_printf("shiftright\n"); //add new line
-			//r += 1 - 1;//right
-		else if (input[5] == 68)
-			ft_printf("shiftleft\n"); //add new line
-			//r += 1 - 1;//left
-		else
-			return (ft_printf("NADA\n"));
-		return (1);
+		ft_putstr_fd(tgetstr("nd", 0), 1);
+		tr->pos += 1;
+	}
+	return (1);
+}
+
+
+int		print_properly(char *str, t_tracker *tr)
+{
+	int		ret;
+
+	if (!str || !tr)
+		return (0);
+	ret = ft_printf("%s", str);
+	tr->pos += ret;
+	tr->len += ret;
+	return (1);
+}
+
+int		handle_shift(char *buf, t_tracker *tr)
+{
+	if (tr->r == 3 && buf[0] == 27 && buf[1] == 91 && buf[2] == 90)
+		return (1); //tab
+	if (tr->r == 6 && buf[0] == 27 && buf[1] == 91 && buf[2] == 49 &&
+		buf[3] == 59 && buf[4] == 50)
+	{
+		if (buf[5] == 65)
+			return (2); // up
+		else if (buf[5] == 66)
+			return (3);// down
+		else if (buf[5] == 67)
+			return (4); // right
+		else if (buf[5] == 68)
+			return (5);// left
 	}
 	return (0);
 }
