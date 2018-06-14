@@ -23,6 +23,7 @@ SRC		=	main.c \
 			print.c \
 			split_input.c \
 			display_prompt.c \
+			display_prompt2.c \
 			run_shell.c
 			
 

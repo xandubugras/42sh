@@ -31,6 +31,7 @@
 # define UP_KEY              	4283163
 # define DOWN_KEY               4348699
 # define DEL_KEY                2117294875L
+# define DIRTY_CHAR				48
 
 typedef struct	s_elem
 {
@@ -89,6 +90,12 @@ int				run_shell(t_terminal *t);
 **DISPLAY_PROMPT.c
 */
 char			*prompt_command(t_terminal *t, t_stack *cmds, char *msg);
+/*
+**DISPLAY_PROMPT2.c
+*/
+char			*insert_char(char *input, int *len, int *pos, int *i);
+
+char			*rm_char(char *input, int pos);
 /*
 **COMMANDS.c
 */

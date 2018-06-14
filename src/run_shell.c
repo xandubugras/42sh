@@ -10,6 +10,7 @@ int		run_shell(t_terminal	*t)
 	cmd_history = create_stack();
 	while (1)
 	{
+		input = 0;
 		ft_putstr_fd(COOL_RED, 1);
 		input = prompt_command(t, cmd_history, "42sh > ");
 		ft_printf("\noutput: %s\n", input);
@@ -18,11 +19,9 @@ int		run_shell(t_terminal	*t)
 		//remove '\'
 		splt = split_and_rejoin(input);
 		//split_str
-		exit(1);
 		//replace_stuff
 		//order commands
 		//run commands
-		break ;
 	}
 	t = t + 1 - 1;
 	return (0);
