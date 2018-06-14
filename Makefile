@@ -21,6 +21,7 @@ SRC		=	main.c \
 			commands.c \
 			replacements.c \
 			print.c \
+			helper.c \
 			split_input.c \
 			display_prompt.c \
 			display_prompt2.c \

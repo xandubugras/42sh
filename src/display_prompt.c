@@ -3,11 +3,11 @@
 
 int		handle_key(char *input, int *pos, int *len, t_terminal *t)
 {
+	int		r;
+
+	r = ft_strlen(input);
 	if (input[0] == ESC_KEY && !input[1])
-	{
-		retrieve_terminal(prev_term);
-		exit(1);
-	}
+		return (4);
 	else if (input[0] == ENTER_KEY)
 	{
 		input[0] = 0;
@@ -19,10 +19,11 @@ int		handle_key(char *input, int *pos, int *len, t_terminal *t)
 		move_cursor_left(pos);
 	else if (!(ft_strncmp(t->right, input, 3)))
 		move_cursor_right(pos, *len);
-	else
-		return (0);
+	else if (r == 6 || r == 3)
+		return (handle_shift(input, r));
+	return (0);
 	*input = DIRTY_CHAR;
-	return (1);
+	return (r - 1);
 }
 
 char	*get_input(t_terminal *t)
@@ -32,23 +33,29 @@ char	*get_input(t_terminal *t)
 	int		pos;
 	int		len;
 	int		r;
-	int		erased;
 
 	input = malloc(sizeof(char) * BUFF_SIZE);
 	input[BUFF_SIZE - 1] = 0;
 	i = 0;
 	len = 0;
 	pos = 0;
-	erased = 0;
-	while ((r = read(0, &input[i], 4)) > 0 && i < BUFF_SIZE - 4)
+	while ((r = read(0, &input[i], BUFF_SIZE/2)) > 0 && i < BUFF_SIZE - 4)
 	{
-		input[i + 1] = r == 1 ? 0 : input[i + 1];
-		if ((r = handle_key(&input[i], &pos, &len, t) + 1) == 1)
+		clear_mem(&input[i], r);
+		//ft_printf("\nr: %d\n%d %d %d %d %d %d\n",r, input[i], input[i + 1], input[i + 2], input[i + 3], input[i + 4], input[i + 5]);
+		if ((r = handle_key(&input[i], &pos, &len, t) + 1) == 1 && ft_isprint(input[i]))
 			input = insert_char(input, &len, &pos, &i);
+		else if (r == 6)
+		{
+			input[i] = '\n';
+			input = insert_char(input, &len, &pos, &i);
+		}
 		else if (r == 3)
 			rm_char(input, pos);
 		else if (r == 4)
 			return (input);
+		else if (r == 5)
+			return (0);
 	}
 	return (0);
 }
@@ -105,6 +112,10 @@ char	*check_quotes(char *input, t_terminal *t, int start)
 	}
 	return (joined);
 }
+//shift Up 27 91 49 59 50 65
+//shift Down 27 91 49 59 50 66
+//shift left 27 91 49 59 50 68
+//shift right 27 91 49 59 50 67
 
 char	*prompt_command(t_terminal *t, t_stack *cmds, char *msg)
 {
@@ -117,10 +128,12 @@ char	*prompt_command(t_terminal *t, t_stack *cmds, char *msg)
 	ft_putstr_fd(tgetstr("im", 0), 1);
 	set_can_terminal(t);
 	input = get_input(t);
-	ft_printf("\ndirty: %s\n", input);
-	input = clean_input(input);
-	input = check_quotes(input, t, tmp);
-	ft_printf("\ninput: %s\n", input);
+	if (input)
+	{
+		input = clean_input(input);
+		input = check_quotes(input, t, tmp);
+		ft_printf("\ninput: %s\n", input);
+	}
 	ft_putstr_fd(tgetstr("ei", 0), 1);
 	push(cmds, 0, input);
 	cmds = cmds + 1 - 1;

@@ -5,9 +5,8 @@ char	*insert_char(char *input, int *len, int *pos, int *i)
 	int		j;
 	int		k;
 
-	if (*pos == *len)
-		ft_putchar(input[*i]);
-	else
+	k = *i;
+	if (*pos != *len)
 	{
 		j = 0;
 		k = -1;
@@ -18,8 +17,8 @@ char	*insert_char(char *input, int *len, int *pos, int *i)
 			ft_swap((int *)&input[k], (int *)&input[*i]);
 		else
 			ft_strinsert_char(&input, input[*i], k);
-		ft_putchar(input[k]);
 	}
+	ft_putchar(input[k]);
 	*i += 1;
 	*pos += 1;
 	*len += 1;
@@ -39,8 +38,6 @@ char	*rm_char(char *input, int pos)
 			j++;
 		k++;
 	}
-	if (!input[k])
-		ft_printf("caralhitos\n");
 	input[k - 1] = DIRTY_CHAR;
 	return (input);
 }

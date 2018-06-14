@@ -43,6 +43,14 @@ typedef struct	s_elem
 	char			current;
 }				t_elem;
 
+typedef struct	s_tracker
+{
+	int		i;
+	int		pos;
+	int		len;
+	int		last_read;
+}				t_tracker;
+
 typedef struct	s_terminal
 {
 	struct termios	term;
@@ -97,6 +105,10 @@ char			*insert_char(char *input, int *len, int *pos, int *i);
 
 char			*rm_char(char *input, int pos);
 /*
+**helper.c
+*/
+void	clear_mem(char *str, size_t size);
+/*
 **COMMANDS.c
 */
 void			move_cursor_left(int *pos);
@@ -104,6 +116,8 @@ void			move_cursor_left(int *pos);
 void			move_cursor_right(int *pos, int len);
 
 int				delete_char(int *pos, int *len);
+
+int				handle_shift(char *input, int r);
 /*
 **SPLIT_INPUT.c
 */
