@@ -4,14 +4,11 @@
 
 int		clear_line(t_tracker *tr, char *input)
 {
-	int		i;
-	int		lim;
-
-	lim = tr->line == 0 ? tr->msg_size : 0;
-	i = 0;
-	while (tr->col > lim)
+	if (!input)
+		return (1);
+	while (tr->pos > 0)
 		move_cursor_left(tr, input);
-	while (tr->len > lim)
+	while (tr->len > 0)
 	{
 		ft_putstr_fd(tgetstr("dc", 0), 1);
 		tr->len--;
@@ -31,6 +28,8 @@ int		get_history(t_terminal *t, char **input, t_tracker *tr, int order)
 {
 	if (!t->cmds->top)
 		return (1);
+	if (tr->curr)
+		tr->curr->str = *input;
 	if (tr->curr == 0)
 	{
 		tr->str = *input;
@@ -64,14 +63,3 @@ void	add_line(t_tracker *tr, char **input)
 	tr->line += 1;
 	tr->col = 0;
 }
-
-
-
-
-
-
-
-
-
-
-

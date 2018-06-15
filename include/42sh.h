@@ -119,9 +119,9 @@ t_tracker		*init_tracker(t_tracker *t, char *msg);
 /*
 **helper.c
 */
-void	clear_mem(char *str, size_t size);
+void			clear_mem(char *str, size_t size);
 
-int		find_eol(char *input, int line);
+int				find_eol(char *input, int line);
 /*
 **COMMANDS.c
 */
@@ -141,7 +141,18 @@ int				clear_line(t_tracker *tr, char *input);
 
 int				get_history(t_terminal *t, char **in, t_tracker *tr, int o);
 
-void			add_line(t_tracker *tr, char **inpu);
+void			add_line(t_tracker *tr, char **input);
+
+/*
+**CURSOR JUMPS.c
+*/
+void			move_cursor_beginning(t_tracker *tr, char *input);
+
+void			move_cursor_end(t_tracker *tr, char *input);
+
+void			go_prev_line(t_tracker *tr, char *input);
+
+void			go_next_line(t_tracker *tr, char *input);
 /*
 **SPLIT_INPUT.c
 */

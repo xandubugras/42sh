@@ -4,8 +4,7 @@ char	*insert_char(char **input, char *buf , t_tracker *tr, int len)
 {
 	if (*input == 0)
 	{
-		*input = ft_strnew(len);
-		ft_strncpy(*input, buf, len);
+		*input = ft_strndup(buf, len);
 		return (*input);
 	}
 	ft_strinsert(input, buf, tr->pos);
@@ -30,13 +29,13 @@ int		execute_shift_commands(char **input, t_tracker *tr, int code)
 	if (code == 1)
 		add_line(tr, input);
 	else if (code == 2)
-		ft_printf("SHIFtup");
+		go_prev_line(tr, *input);
 	else if (code == 3)
-		ft_printf("SHIFtdown");
+		go_next_line(tr, *input);
 	else if (code == 4)
-		ft_printf("SHIFtleft");
+		move_cursor_end(tr, *input);
 	else if (code == 5)
-		ft_printf("SHIFtright");
+		move_cursor_beginning(tr, *input);
 	return (1);
 }
 

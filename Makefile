@@ -21,6 +21,7 @@ SRC		=	main.c \
 			constructors.c \
 			commands.c \
 			commands2.c \
+			cursor_jumps.c \
 			replacements.c \
 			helper.c \
 			split_input.c \
