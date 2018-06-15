@@ -37,7 +37,7 @@ int		execute_shift_commands(char **input, t_tracker *tr, int code)
 		ft_printf("SHIFtleft");
 	else if (code == 5)
 		ft_printf("SHIFtright");
-	return (0);
+	return (1);
 }
 
 
@@ -69,11 +69,11 @@ int		handle_key(char **input, char *buf, t_tracker *tr, t_terminal *t)
 	else if (!(ft_strncmp(t->down, buf, tr->r)))
 		return (get_history(t, input, tr, 2));
 	else if ((shift_code = handle_shift(buf, tr)))
-		execute_shift_commands(input, tr, shift_code);
+		return (execute_shift_commands(input, tr, shift_code));
 	return (0);
 }
 
-char	*get_input(t_terminal *t)
+char	*get_input(t_terminal *t, char *msg)
 {
 	char		*input;
 	char		*buf;
@@ -82,7 +82,7 @@ char	*get_input(t_terminal *t)
 
 	buf = ft_strnew(sizeof(char) * BUFF_SIZE);
 	input = 0;
-	init_tracker(&tr);
+	init_tracker(&tr, msg);
 	while ((tr.r = read(0, buf, BUFF_SIZE - 1)) > 0)
 	{
 		buf[tr.r] = 0;
@@ -94,6 +94,7 @@ char	*get_input(t_terminal *t)
 			print_properly(buf, &tr);
 		}
 	}
+	free(buf);
 	return (0);
 }
 

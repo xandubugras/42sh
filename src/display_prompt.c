@@ -64,7 +64,7 @@ char	*prompt_command(t_terminal *t, char *msg)
 	ft_putstr_fd(DEFAULT_COLOR, 1);
 	ft_putstr_fd(tgetstr("im", 0), 1);
 	set_can_terminal(t);
-	input = get_input(t);
+	input = get_input(t, msg);
 	if (input)
 	{
 		input = clean_input(input);

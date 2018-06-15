@@ -2,20 +2,27 @@
 
 int		move_cursor_left(t_tracker *tr)
 {
-	if (tr->pos > 0)
+	int		lim;
+
+	lim = tr->line == 0 ? tr->msg_size : 0;
+	if (tr->col > lim)
 	{
 		ft_putstr_fd(tgetstr("le", 0), 1);
-		tr->pos -= 1;
+		tr->col -= 1;
+		if (tr->pos > 0)
+			tr->pos -= 1;
 	}
 	return (1);
 }
 
 int		move_cursor_right(t_tracker *tr)
 {
-	if (tr->pos < tr->len)
+	if (tr->col < tr->len)
 	{
 		ft_putstr_fd(tgetstr("nd", 0), 1);
-		tr->pos += 1;
+		tr->col += 1;
+		if (tr->pos < tr->len)
+			tr->pos += 1;
 	}
 	return (1);
 }
@@ -29,6 +36,7 @@ int		print_properly(char *str, t_tracker *tr)
 		return (0);
 	ret = ft_printf("%s", str);
 	tr->pos += ret;
+	tr->col += ret;
 	tr->len += ret;
 	return (1);
 }

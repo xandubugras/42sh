@@ -5,14 +5,16 @@
 int		clear_line(t_tracker *tr)
 {
 	int		i;
+	int		lim;
 
+	lim = tr->line == 0 ? tr->msg_size : 0;
 	i = 0;
-	while (tr->pos)
+	while (tr->col > lim)
 		move_cursor_left(tr);
-	while (i < tr->len)
+	while (tr->len > lim)
 	{
 		ft_putstr_fd(tgetstr("dc", 0), 1);
-		i++;
+		tr->len--;
 	}
 	return (1);
 }
@@ -49,8 +51,7 @@ int		get_history(t_terminal *t, char **input, t_tracker *tr, int order)
 		else if (order == UP && tr->curr->next)
 			clear_and_replace(tr, input, tr->curr->next);
 	}
-	else if (tr->curr == t->cmds->bot)
-		if (order == DOWN && tr->curr->prev)
+	else if (tr->curr == t->cmds->bot && order == DOWN && tr->curr->prev)
 			clear_and_replace(tr, input, tr->curr->prev);
 	return (1);
 }

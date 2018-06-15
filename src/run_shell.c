@@ -11,8 +11,9 @@ int		run_shell(t_terminal	*t)
 	{
 		input = 0;
 		ft_putstr_fd(COOL_RED, 1);
-		input = prompt_command(t, "42sh > ");
-		push(t->cmds, 0, input);
+		input = prompt_command(t, PROMPT_MSG);
+		if (input && input[0] != 0)
+			push(t->cmds, 0, input);
 		if (!input)
 			break ;
 		ft_printf("\noutput: %s\n", input);

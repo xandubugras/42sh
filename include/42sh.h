@@ -32,6 +32,7 @@
 # define DOWN_KEY               4348699
 # define DEL_KEY                2117294875L
 # define DIRTY_CHAR				48
+# define PROMPT_MSG				"42sh > "
 
 typedef struct	s_elem
 {
@@ -45,8 +46,10 @@ typedef struct	s_elem
 
 typedef struct	s_tracker
 {
-	int		i;
+	int		msg_size;
 	int		pos;
+	int		col;
+	int		line;
 	int		len;
 	int		r;
 	char	*str;
@@ -101,7 +104,7 @@ int				run_shell(t_terminal *t);
 /*
 **get_input.c
 */
-char			*get_input(t_terminal *t);
+char			*get_input(t_terminal *t, char *msg);
 /*
 **DISPLAY_PROMPT.c
 */
@@ -109,7 +112,7 @@ char			*prompt_command(t_terminal *t, char *msg);
 /*
 **helper.c
 */
-t_tracker		*init_tracker(t_tracker *t);
+t_tracker		*init_tracker(t_tracker *t, char *msg);
 /*
 **helper.c
 */
