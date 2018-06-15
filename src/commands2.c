@@ -2,7 +2,7 @@
 #define UP 1
 #define DOWN 2
 
-int		clear_line(t_tracker *tr)
+int		clear_line(t_tracker *tr, char *input)
 {
 	int		i;
 	int		lim;
@@ -10,7 +10,7 @@ int		clear_line(t_tracker *tr)
 	lim = tr->line == 0 ? tr->msg_size : 0;
 	i = 0;
 	while (tr->col > lim)
-		move_cursor_left(tr);
+		move_cursor_left(tr, input);
 	while (tr->len > lim)
 	{
 		ft_putstr_fd(tgetstr("dc", 0), 1);
@@ -22,7 +22,7 @@ int		clear_line(t_tracker *tr)
 void	clear_and_replace(t_tracker *tr, char **input, t_elem *new)
 {
 	tr->curr = new;
-	clear_line(tr);
+	clear_line(tr, *input);
 	*input = new ? new->str : tr->str;
 	print_properly(*input, tr);
 }
@@ -55,3 +55,23 @@ int		get_history(t_terminal *t, char **input, t_tracker *tr, int order)
 			clear_and_replace(tr, input, tr->curr->prev);
 	return (1);
 }
+
+void	add_line(t_tracker *tr, char **input)
+{
+	insert_char(input, "\n", tr, 1);
+	print_properly("\n", tr);
+	tr->num_of_lines += 1;
+	tr->line += 1;
+	tr->col = 0;
+}
+
+
+
+
+
+
+
+
+
+
+

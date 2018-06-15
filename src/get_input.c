@@ -1,23 +1,23 @@
 #include "../include/42sh.h"
 
-char	*insert_char2(char **input, char *buf , t_tracker *tr)
+char	*insert_char(char **input, char *buf , t_tracker *tr, int len)
 {
 	if (*input == 0)
 	{
-		*input = ft_strnew(tr->r);
-		ft_strncpy(*input, buf, tr->r);
+		*input = ft_strnew(len);
+		ft_strncpy(*input, buf, len);
 		return (*input);
 	}
 	ft_strinsert(input, buf, tr->pos);
 	return (*input);
 }
 
-int		delete_char2(char **input, t_tracker *tr)
+int		delete_char(char **input, t_tracker *tr)
 {
 	if (!tr->pos)
 		return (1);
 	ft_strremove_char(input, tr->pos - 1);
-	move_cursor_left(tr);
+	move_cursor_left(tr, *input);
 	ft_putstr_fd(tgetstr("dc", 0), 1);
 	tr->len -= 1;
 	return (1);
@@ -28,7 +28,7 @@ int		execute_shift_commands(char **input, t_tracker *tr, int code)
 	input += 1 - 1;
 	tr += 1 - 1;
 	if (code == 1)
-		ft_printf("SHIFtTAB");
+		add_line(tr, input);
 	else if (code == 2)
 		ft_printf("SHIFtup");
 	else if (code == 3)
@@ -59,11 +59,11 @@ int		handle_key(char **input, char *buf, t_tracker *tr, t_terminal *t)
 		return (2);
 	}
 	else if (tr->r == 1 && buf[0] == DELETE_KEY)
-		return (delete_char2(input, tr));
+		return (delete_char(input, tr));
 	else if (!(ft_strncmp(t->left, buf, tr->r)))
-		return (move_cursor_left(tr));
+		return (move_cursor_left(tr, *input));
 	else if (!(ft_strncmp(t->right, buf, tr->r)))
-		return (move_cursor_right(tr));
+		return (move_cursor_right(tr, *input));
 	else if (!(ft_strncmp(t->up, buf, tr->r)))
 		return (get_history(t, input, tr, 1));
 	else if (!(ft_strncmp(t->down, buf, tr->r)))
@@ -90,7 +90,7 @@ char	*get_input(t_terminal *t, char *msg)
 			return (input);
 		else if (!ret)
 		{
-			insert_char2(&input, buf, &tr);
+			insert_char(&input, buf, &tr, tr.r);
 			print_properly(buf, &tr);
 		}
 	}

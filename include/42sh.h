@@ -47,6 +47,7 @@ typedef struct	s_elem
 typedef struct	s_tracker
 {
 	int		msg_size;
+	int		num_of_lines;
 	int		pos;
 	int		col;
 	int		line;
@@ -105,26 +106,30 @@ int				run_shell(t_terminal *t);
 **get_input.c
 */
 char			*get_input(t_terminal *t, char *msg);
+
+char			*insert_char(char **input, char *buf, t_tracker *tr, int len);
 /*
 **DISPLAY_PROMPT.c
 */
 char			*prompt_command(t_terminal *t, char *msg);
 /*
-**helper.c
+**constructor.c
 */
 t_tracker		*init_tracker(t_tracker *t, char *msg);
 /*
 **helper.c
 */
 void	clear_mem(char *str, size_t size);
+
+int		find_eol(char *input, int line);
 /*
 **COMMANDS.c
 */
-int				move_cursor_left(t_tracker *tr);
+int				move_cursor_left(t_tracker *tr, char *str);
 
-int				move_cursor_right(t_tracker *tr);
+int				move_cursor_right(t_tracker *tr, char *str);
 
-int				delete_char(int *pos, int *len);
+int				delete_char(char **input, t_tracker *tr);
 
 int				print_properly(char *str, t_tracker *tr);
 
@@ -132,9 +137,11 @@ int				handle_shift(char *buf, t_tracker *r);
 /*
 **COMMANDS2.c
 */
-int				clear_line(t_tracker *tr);
+int				clear_line(t_tracker *tr, char *input);
 
 int				get_history(t_terminal *t, char **in, t_tracker *tr, int o);
+
+void			add_line(t_tracker *tr, char **inpu);
 /*
 **SPLIT_INPUT.c
 */

@@ -10,5 +10,6 @@ t_tracker	*init_tracker(t_tracker *t, char *str)
 	t->r = 0;
 	t->curr = 0;
 	t->line = 0;
+	t->num_of_lines = 1;
 	return (t);
 }
