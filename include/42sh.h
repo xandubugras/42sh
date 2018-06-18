@@ -162,6 +162,10 @@ char			**split_and_rejoin(char *input);
 */
 char			*replace_wc(char *input);
 /*
+**remove_backslash.c
+*/
+int			remove_backslash(char **input);
+/*
 **-------------------------CREATE_LIST------------------------
 */
 t_elem			*create_list(int argc, char **argv);

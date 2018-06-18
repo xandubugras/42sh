@@ -18,8 +18,7 @@ int		run_shell(t_terminal	*t)
 			break ;
 		ft_printf("\noutput: %s\n", input);
 		input = replace_wc(input);
-	//	handle multiple line
-		//remove '\'
+		remove_backslash(&input);
 		splt = split_and_rejoin(input);
 		//split_str
 		//replace_stuff

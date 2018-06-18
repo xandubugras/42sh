@@ -56,5 +56,5 @@ char	*replace_wc(char *input)
 	input = handle_tildo(input);
 	input = handle_env_vars(input);
 	ft_printf("~$: %s.\n", input);
-	return (0);
+	return (input);
 }

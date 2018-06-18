@@ -253,6 +253,8 @@ char			*ft_strinsert_char(char **src, char str, int location);
 
 char			*ft_strremove_char(char **src, int location);
 
+char			*ft_remove_chars(char **src, char remove);
+
 char			*ft_strinsert_sub(char **src, char *str, int location);
 /*
 **-----------------------PRINTING FUNCTIONS----------------------------

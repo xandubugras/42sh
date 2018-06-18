@@ -40,6 +40,7 @@ SRCS=ft_memset.c \
 				ft_memcmp.c \
 				ft_strinsert.c \
 				ft_strinsert_sub.c \
+				ft_remove_char.c \
 				ft_strcpy.c \
 				ft_strdup.c \
 				ft_strcat.c \

@@ -23,6 +23,7 @@ SRC		=	main.c \
 			commands2.c \
 			cursor_jumps.c \
 			replacements.c \
+			remove_backslash.c \
 			helper.c \
 			split_input.c \
 			display_prompt.c \
