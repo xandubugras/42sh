@@ -74,12 +74,23 @@ typedef struct	s_terminal
 {
 	struct termios	term;
 	struct s_stack	*cmds;
+	char			**env;
 	char			*up;
 	char			*down;
 	char			*left;
 	char			*right;
 	char			*clear;
 }				t_terminal;
+
+typedef struct	s_command
+{
+	char				*command;
+	char				**arguments;
+	char				todo;
+	char				is_file;
+	struct s_command	*next;
+	struct s_command	*prev;
+}				t_command;
 
 struct termios	prev_term;
 struct termios	bg_term;
@@ -116,12 +127,18 @@ char			*prompt_command(t_terminal *t, char *msg);
 **constructor.c
 */
 t_tracker		*init_tracker(t_tracker *t, char *msg);
+
+t_command		*new_command();
 /*
 **helper.c
 */
 void			clear_mem(char *str, size_t size);
 
 int				find_eol(char *input, int line);
+
+char			**set_arguments(char **input, int *i);
+
+void			print_str_arr(char **str);
 /*
 **COMMANDS.c
 */
@@ -164,7 +181,19 @@ char			*replace_wc(char *input);
 /*
 **remove_backslash.c
 */
-int			remove_backslash(char **input);
+int				remove_backslash(char **input);
+/*
+**COMMANDS_LIST.c
+*/
+t_command		*create_cmd_list(char **input);
+
+t_command		*create_cmd(char **input, int i);
+
+int				set_todo(char *to_do);
+/*
+**EXECUTE_COMMANDS.c
+*/
+int				run_commands(t_command *root, t_terminal *t);
 /*
 **-------------------------CREATE_LIST------------------------
 */

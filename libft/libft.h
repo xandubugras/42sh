@@ -297,6 +297,10 @@ void			ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 */
 int				ft_printf(char *format, ...);
 
+int				ft_printf_err(char *format, ...);
+
+int				*ft_printf_err_zero(char *format, ...);
+
 int				is_format_letter(char c);
 
 char			*separate_descriptor(char **format);

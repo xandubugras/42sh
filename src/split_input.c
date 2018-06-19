@@ -79,5 +79,5 @@ char	**split_and_rejoin(char *input)
 		ft_printf("%d: %s.\n", i, splt[i]);
 		i++;
 	}
-	return (0);
+	return (splt);
 }

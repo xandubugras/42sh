@@ -12,16 +12,19 @@
 
 #include "../include/42sh.h"
 
-int		main(void)
+int		main(int argc, char **argv, char **env)
 {
 	t_terminal		t;
 
 	if (set_terminal(&t))
 		return (1);
+	t.env = env;
 	init_signal_handlers();
 	clear_scrn(t);
 	if (run_shell(&t))
 		return (1);
 	retrieve_terminal(prev_term);
+	argc += 1 - 1;
+	argv += 1 - 1;
 	return (0);
 }

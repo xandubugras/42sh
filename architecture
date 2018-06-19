@@ -13,4 +13,10 @@ prompt user
 		-search for custom commands (like exit)
 		-search for commands in all PATHs
 		-
-		
+
+- parse splitted string and interpret	
+- &&, ||, ;, |, >>, >, <<, <
+- turn execv in execlp
+- build builtins
+- file descriptor ag
+- *

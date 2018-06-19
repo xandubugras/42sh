@@ -2,8 +2,9 @@
 
 int		run_shell(t_terminal	*t)
 {
-	char	*input;
-	char	**splt;
+	char		*input;
+	char		**splt;
+	t_command	*root;
 	//char	c[4];
 
 	t->cmds = create_stack();
@@ -19,9 +20,11 @@ int		run_shell(t_terminal	*t)
 		ft_printf("\noutput: %s\n", input);
 		input = replace_wc(input);
 		remove_backslash(&input);
+		//add space if strstr commands (&&, || |);
 		splt = split_and_rejoin(input);
-		//split_str
-		//replace_stuff
+		root = create_cmd(splt, 0);
+		run_commands(root, t);
+		//splt
 		//order commands
 		//run commands
 	}

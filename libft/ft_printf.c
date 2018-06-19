@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-
 void	ft_print_argument(va_list arg_pointer, char **format, int *prntd)
 {
 	t_descriptor *descriptor;
@@ -25,6 +24,25 @@ void	ft_print_argument(va_list arg_pointer, char **format, int *prntd)
 			*prntd += ft_strlen(descriptor->final_content);
 		}
 		ft_putstr(descriptor->final_content);
+		free(descriptor->final_content);
+		free(descriptor->description);
+	}
+	free(descriptor);
+}
+
+void	ft_print_argument_err(va_list arg_pointer, char **format, int *prntd)
+{
+	t_descriptor *descriptor;
+
+	descriptor = new_descriptor();
+	if (!set_descriptor(format, arg_pointer, descriptor))
+	{
+		if (descriptor->final_content)
+		{
+			format_content(descriptor);
+			*prntd += ft_strlen(descriptor->final_content);
+		}
+		ft_putstr_fd(descriptor->final_content, 2);
 		free(descriptor->final_content);
 		free(descriptor->description);
 	}
@@ -53,16 +71,46 @@ int		ft_printf(char *format, ...)
 	return (printed_characters);
 }
 
-/*
-** void	print_descriptor(t_descriptor *d)
-** {
-**	printf("description: %s\nprinted: %d\nplus: %d\nminus:
-** %d\nhash:%d\nzero: %d\nspace: %d\nwidth:
-** %d\nlength: %d\nprecision: %d\ntype: %d\nargument:
-** %lld\nbase: %d\n%s\n",
-** d->description, d->printed_characters, d->plus,
-** d->minus, d->hash, d->zero, d->space, d->width,
-** d->length, d->precision, d->type, d->arg, d->base,
-** d->final_content);
-** }
-*/
+int		ft_printf_err(char *format, ...)
+{
+	va_list			arg_pointer;
+	int				printed_characters;
+
+	va_start(arg_pointer, format);
+	printed_characters = 0;
+	while (*format)
+	{
+		if (*format == '%')
+			ft_print_argument_err(arg_pointer, &format, &printed_characters);
+		else
+		{
+			ft_putchar_fd(*format, 2);
+			printed_characters++;
+		}
+		format++;
+	}
+	va_end(arg_pointer);
+	return (printed_characters);
+}
+
+int		*ft_printf_err_zero(char *format, ...)
+{
+	va_list			arg_pointer;
+	int				printed_characters;
+
+	va_start(arg_pointer, format);
+	printed_characters = 0;
+	while (*format)
+	{
+		if (*format == '%')
+			ft_print_argument(arg_pointer, &format, &printed_characters);
+		else
+		{
+			ft_putchar_fd(*format, 2);
+			printed_characters++;
+		}
+		format++;
+	}
+	va_end(arg_pointer);
+	return (0);
+}

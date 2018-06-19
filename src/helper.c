@@ -34,3 +34,38 @@ int		find_eol(char *input, int line)
 	}
 	return (len);
 }
+
+char	**set_arguments(char **input, int *i)
+{
+	int		j;
+	int		tmp;
+	char	**args;
+
+	ft_printf("input1: %s i:%d\n", input[*i], *i);
+	if (!input || !*input)
+		return (0);
+	j = 0;
+	while (!set_todo(input[j + *i]))
+		j++;
+	ft_printf("j= %d\n", j);
+	tmp = j + *i;
+	args = malloc(sizeof(char *) * (j + 1));
+	args[j] = 0;
+	while (--j >= 0)
+		args[j] = ft_strdup(input[*i + j]);
+	*i = tmp;
+	ft_printf("input2: %s i:%d\n", input[*i], *i);
+	return (args);
+}
+
+void	print_str_arr(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		ft_printf("%s\n", str[i]);
+		i++;
+	}
+}

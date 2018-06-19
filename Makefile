@@ -28,6 +28,8 @@ SRC		=	main.c \
 			split_input.c \
 			display_prompt.c \
 			get_input.c \
+			command_list.c \
+			execute_commands.c \
 			run_shell.c
 			
 
