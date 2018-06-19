@@ -136,8 +136,6 @@ void			clear_mem(char *str, size_t size);
 
 int				find_eol(char *input, int line);
 
-char			**set_arguments(char **input, int *i);
-
 void			print_str_arr(char **str);
 /*
 **COMMANDS.c
@@ -185,15 +183,19 @@ int				remove_backslash(char **input);
 /*
 **COMMANDS_LIST.c
 */
-t_command		*create_cmd_list(char **input);
-
 t_command		*create_cmd(char **input, int i);
 
 int				set_todo(char *to_do);
+
+char			**set_arguments(char **input, int *i);
 /*
 **EXECUTE_COMMANDS.c
 */
 int				run_commands(t_command *root, t_terminal *t);
+/*
+**EXECUTE_WRITE.c
+*/
+int				write_it(t_command *cmd, t_terminal *t, int flags, int std);
 /*
 **-------------------------CREATE_LIST------------------------
 */

@@ -14,7 +14,7 @@ char	*handle_tildo(char	*input)
 				ft_strinsert_sub(&input, path, i);
 		i++;
 	}
-	ft_printf("%s\n", input);
+	//ft_printf("%s\n", input);
 	return (input);
 }
 
@@ -39,9 +39,9 @@ char	*handle_env_vars(char *input)
 				tmp = ft_strsub(input, i + 1, copied);
 				path = getenv(tmp);
 				copied = ft_strncpy_safe(&input[i], path, j - i);
-				ft_printf("tmp: %s.\n", tmp);
-				ft_printf("path: %s.\n", path);
-				ft_printf("input after cpy1: %s.\n", input);
+	//			ft_printf("tmp: %s.\n", tmp);
+	//			ft_printf("path: %s.\n", path);
+	//			ft_printf("input after cpy1: %s.\n", input);
 				if (copied < (int)ft_strlen(path))
 					ft_strinsert(&input, &path[copied], i + copied);
 			}
@@ -55,6 +55,6 @@ char	*replace_wc(char *input)
 {
 	input = handle_tildo(input);
 	input = handle_env_vars(input);
-	ft_printf("~$: %s.\n", input);
+	//ft_printf("~$: %s.\n", input);
 	return (input);
 }

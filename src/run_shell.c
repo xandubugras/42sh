@@ -17,7 +17,7 @@ int		run_shell(t_terminal	*t)
 			push(t->cmds, 0, input);
 		if (!input)
 			break ;
-		ft_printf("\noutput: %s\n", input);
+	//	ft_printf("\noutput: %s\n", input);
 		input = replace_wc(input);
 		remove_backslash(&input);
 		//add space if strstr commands (&&, || |);

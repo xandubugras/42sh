@@ -30,6 +30,7 @@ SRC		=	main.c \
 			get_input.c \
 			command_list.c \
 			execute_commands.c \
+			execute_write.c \
 			run_shell.c
 			
 

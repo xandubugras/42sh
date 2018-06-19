@@ -70,13 +70,13 @@ char	**split_and_rejoin(char *input)
 		return (0);
 	while (!handle_quotes(input))
 		;
-	ft_printf("handled: %s\n", input);
+	//ft_printf("handled: %s\n", input);
 	splt = ft_strsplit(input, ' ');
 	i = 0;
 	while (splt[i])
 	{
 		splt[i] = remove_tmps(splt[i], QUOTE_CODE);
-		ft_printf("%d: %s.\n", i, splt[i]);
+	//	ft_printf("%d: %s.\n", i, splt[i]);
 		i++;
 	}
 	return (splt);

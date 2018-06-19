@@ -69,8 +69,9 @@ char	*prompt_command(t_terminal *t, char *msg)
 	{
 		input = clean_input(input);
 		input = check_quotes(input, t, tmp);
-		ft_printf("\ninput: %s\n", input);
+		//ft_printf("\ninput: %s\n", input);
 	}
+	ft_putchar('\n');
 	ft_putstr_fd(tgetstr("ei", 0), 1);
 	return (input);
 }
